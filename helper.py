@@ -10,12 +10,20 @@ classes = ('plane', 'car', 'bird', 'cat', 'deer',
 def visualize_one(data):
     image, label = data
 
-    image = np.transpose(unnormalize(image[0].numpy()), (1, 2, 0))
-    label = label[0].item()
+    image = np.transpose(image[0].numpy(), (1, 2, 0))
+    label = label[0].argmax(0)
 
-    plt.axis(False)
-    plt.imshow(image)
+    print(image)
+    print(label)
+
+    fig, (ax1, ax2) = plt.subplots(2)
+    # plt.axis(False)
+
     plt.title(f'Class: {classes[label]}')
+    
+    ax1.imshow(image)
+    ax2.hist(image[:,:,0])
+
     plt.savefig('out/test.jpg')
 
 
