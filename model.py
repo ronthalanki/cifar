@@ -1,22 +1,27 @@
-from re import A
 import torch.nn as nn
 import torchvision.models as models
 
-resnet18 = models.resnet18(pretrained=True)
+resnet50 = models.resnet50(pretrained=True)
 
 class PreTrainedConvNet(nn.Module):
     def __init__(self):
         super(PreTrainedConvNet, self).__init__()
 
         self.stack = nn.Sequential(
-            resnet18,
-            nn.Linear(1000, 512),
+            resnet50,
+            nn.Linear(1000, 4196),
             nn.ReLU(),
-            nn.Linear(512, 256),
+            nn.Linear(4196, 2000),
             nn.ReLU(),
-            nn.Linear(256, 64),
+            nn.Linear(2000, 1000),
             nn.ReLU(),
-            nn.Linear(64, 10)
+            nn.Linear(1000, 400),
+            nn.ReLU(),
+            nn.Linear(400, 200),
+            nn.ReLU(),
+            nn.Linear(200, 100),
+            nn.ReLU(),
+            nn.Linear(100, 10),
         )
     
     def forward(self, x):
